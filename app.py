@@ -2,21 +2,14 @@ from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
-@app.route('/')
-def home():
-    return render_template('index.html')
-
-@app.route('/about')
-def about():
-    return render_template('about.html')
-
-@app.route('/contact', methods=['GET', 'POST'])
-def contact():
+@app.route('/', methods=['GET', 'POST'])
+def register():
     if request.method == 'POST':
-        name = request.form.get('name')
-        message = request.form.get('message')
-        return render_template('contact.html', name=name, message=message, submitted=True)
-    return render_template('contact.html', submitted=False)
+        name = request.form['name']
+        email = request.form['email']
+        return f"Thanks {name}, your email is {email}"
 
-if __name__ == '__main__':
+    return render_template('form.html')
+
+if __name__ == "__main__":
     app.run(debug=True)
